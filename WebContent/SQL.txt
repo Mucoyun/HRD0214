@@ -1,0 +1,67 @@
+
+drop table product0214;
+create table product0214(
+	productCode number(6) not null,
+	productName varchar2(80) not null,
+	storeCode number(3) not null,
+	unitPrice number(11) not null,
+	stockQty number(11),
+	primary key(productCode,storeCode)
+);
+
+insert into product0214 values(100001,'note10',101,1200000,20);
+insert into product0214 values(100002,'iPhone13',102,1500000,10);
+insert into product0214 values(100003,'갤럭시 Z Flip3',103,1850000,9);
+insert into product0214 values(100004,'갤럭시 S21',104,1100000,34);
+insert into product0214 values(100005,'iPhone11',105,1050000,15);
+
+
+drop table store0214;
+create table store0214(
+	storeCode number(3) not null,
+	storeName varchar2(80) not null,
+	productCode number(6) not null,
+	Qty number(11),
+	primary key(storeCode,productCode)
+);
+
+insert into store0214 values(101,'양정점',100001,5);
+insert into store0214 values(102,'금정점',100002,3);
+insert into store0214 values(103,'기장점',100003,2);
+insert into store0214 values(104,'영도점',100001,2);
+insert into store0214 values(105,'서면점',100004,4);
+
+
+drop sequence store0214_storeCode_seq;
+create sequence store0214_storeCode_seq
+	start with 106
+	increment by 1
+	maxvalue 999
+	cycle
+;
+
+select store0214_storeCode_seq.nextval from dual;
+select store0214_storeCode_seq.currval from dual;
+
+drop table inOut0214;
+create table inOut0214(
+	inOutDate date not null,
+	storeCode number(3) not null,
+	productCode number(6) not null,
+	gubun char(1) not null,
+	saleQty number(11) not null,
+	primary key(inOutDate,storeCode,productCode)
+);
+
+insert into inOut0214 values('2022-01-31',101,100001,'1',3);
+insert into inOut0214 values('2022-01-31',103,100002,'1',5);
+insert into inOut0214 values('2022-02-01',101,100001,'2',2);
+insert into inOut0214 values('2022-02-01',104,100003,'1',5);
+
+insert into inOut0214 values('2022-01-31',101,100002,'2',3);
+insert into inOut0214 values('2022-01-31',103,100001,'2',5);
+insert into inOut0214 values('2022-02-01',102,100004,'2',2);
+insert into inOut0214 values('2022-02-01',103,100003,'2',5);
+
+commit;
+
